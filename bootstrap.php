@@ -29,6 +29,7 @@ if (!empty($config['database'])) {
     $db_config = $config['database'];
     
     require_once './core/Connection.php';
+    require_once './core/QueryBuilder.php';
     require_once './core/Database.php';
 }
 require_once './core/Model.php'; // Load Base Model

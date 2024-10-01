@@ -1,6 +1,7 @@
 <?php
 class Database
 {
+    use QueryBuilder;
     private $__conn;
     // Kết nối database
     function __construct()

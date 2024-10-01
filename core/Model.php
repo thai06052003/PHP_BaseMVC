@@ -2,12 +2,15 @@
 // Base Model
 abstract class Model extends Database {
     protected $db;
+    
     function __construct() {
         $this->db = new Database();
     }
     abstract function tableFill();
     abstract function fieldFill();
-    public function get() {
+    abstract function primaryKey();
+    // Lấy tất cả bản ghi
+    public function all() {
         $tableName = $this->tableFill();
         $fieldSelect = $this->fieldFill();
         if (empty($fieldSelect)) $fieldSelect = '*';
@@ -21,12 +24,14 @@ abstract class Model extends Database {
         }
         return false;
     }
-    public function first() {
+    // Lấy một bản ghi
+    public function find($id) {
         $tableName = $this->tableFill();
         $fieldSelect = $this->fieldFill();
+        $primaryKey = $this->primaryKey();
         if (empty($fieldSelect)) $fieldSelect = '*';
 
-        $sql = "SELECT $fieldSelect FROM $tableName";
+        $sql = "SELECT $fieldSelect FROM $tableName WHERE $primaryKey=$id";
 
         $query = $this->db->query($sql);
 
