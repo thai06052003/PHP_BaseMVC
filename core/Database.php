@@ -2,11 +2,13 @@
 class Database
 {
     private $__conn;
+    // Kết nối database
     function __construct()
     {
         global $db_config;
         $this->__conn = Connection::getInstance($db_config);
     }
+    // Thêm dữ liệu
     function insert($table, $data)
     {
         if (!empty($data)) {
@@ -31,7 +33,7 @@ class Database
         return false;
     }
 
-    //Sửa dữ liệu
+    // Sửa dữ liệu
     function update($table, $data, $condition = '')
     {
         if (!empty($data)) {
@@ -58,7 +60,7 @@ class Database
         return false;
     }
 
-    //Xoá dữ liệu
+    // Xoá dữ liệu
     function delete($table, $condition = '')
     {
         if (!empty($condition)) {
@@ -76,16 +78,23 @@ class Database
         return false;
     }
 
-    //Truy vấn câu lệnh SQL
+    // Truy vấn câu lệnh SQL
     function query($sql)
     {
-        $statement = $this->__conn->prepare($sql);
+        try {
+            $statement = $this->__conn->prepare($sql);
+            $statement->execute();
+            return $statement;
+        }
+        catch (Exception $exception) {
+            $mess = $exception->getMessage();
+            $data['message'] = $mess;
+            App::$app->loadError('database', $data);
+            die();
+        }
 
-        $statement->execute();
-
-        return $statement;
     }
-    //Trả về id mới nhất sau khi đã insert
+    // Trả về id mới nhất sau khi đã insert
     function lastInsertId()
     {
         return $this->__conn->lastInsertId();

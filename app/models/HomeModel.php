@@ -4,8 +4,15 @@
 */
 class HomeModel extends Model{
     protected $_table = 'province';
+    public function tableFill() {
+        return 'province';
+    }
+    public function fieldFill() {
+        return 'name, code';
+    }
     public function getList() {
         $data = $this->db->query("SELECT * FROM $this->_table")->fetchAll(PDO::FETCH_ASSOC);
+
         return $data;
     }
     public function getDetail($id) {
