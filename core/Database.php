@@ -10,7 +10,7 @@ class Database
         $this->__conn = Connection::getInstance($db_config);
     }
     // Thêm dữ liệu
-    function insert($table, $data)
+    function insertData($table, $data)
     {
         if (!empty($data)) {
             $fieldStr = '';
@@ -35,7 +35,7 @@ class Database
     }
 
     // Sửa dữ liệu
-    function update($table, $data, $condition = '')
+    function updateData($table, $data, $condition = '')
     {
         if (!empty($data)) {
             $updateStr = '';
@@ -62,7 +62,7 @@ class Database
     }
 
     // Xoá dữ liệu
-    function delete($table, $condition = '')
+    function deleteData($table, $condition = '')
     {
         if (!empty($condition)) {
             $sql = 'DELETE FROM ' . $table . ' WHERE ' . $condition;

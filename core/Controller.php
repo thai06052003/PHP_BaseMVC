@@ -1,5 +1,6 @@
 <?php
 class Controller {
+    public $db;
     public function model($model) {
         if (file_exists(__DIR_ROOT.'/app/models/'.$model.'.php')) {
             require_once __DIR_ROOT.'/app/models/'.$model.'.php';

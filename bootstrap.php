@@ -31,6 +31,9 @@ if (!empty($config['database'])) {
     require_once './core/Connection.php';
     require_once './core/QueryBuilder.php';
     require_once './core/Database.php';
+    require_once './core/DB.php';
 }
 require_once './core/Model.php'; // Load Base Model
 require_once './core/Controller.php';   // Load base Controller
+require_once './core/Request.php';   // Load Request
+require_once './core/Response.php';   // Load Response
