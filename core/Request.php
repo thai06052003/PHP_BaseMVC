@@ -65,18 +65,10 @@ class Request
     public function validate()
     {
         $this->__rules = array_filter($this->__rules);
-        /* echo '<pre>';
-        print_r($this->__rules);
-        echo '</pre>'; */
+        $checkValidate = true;
         if (!empty($this->__rules)) {
             $dataFields = $this->getFields();
-            echo '<pre>';
-            print_r($dataFields);
-            echo '</pre>';
-            echo '<pre>';
-            print_r($this->__rules);
-            echo '</pre>';
-
+            
             foreach ($this->__rules as $fieldName => $ruleItem) {
                 $ruleItemArr = explode('|', $ruleItem);
                 foreach ($ruleItemArr as $rule) {
@@ -89,17 +81,55 @@ class Request
                         $rulevalue = end($rulesArr);
                     }
                     if ($ruleName == 'required') {
-                        if (empty($dataFields[$fieldName])) {  // ko co du lieu
-                            $this->errors[$fieldName][$ruleName] = $this->__message[$fieldName . '.' . $ruleName];
+                        if (empty(trim($dataFields[$fieldName]))) {
+                            $this->setErrors($fieldName, $ruleName);
+                        }
+                    }
+                    if ($ruleName == 'min') {
+                        if (strlen(trim($dataFields[$fieldName])) < $rulevalue) {
+                            $this->setErrors($fieldName, $ruleName);
+                        }
+                    }
+                    if ($ruleName == 'max') {
+                        if (strlen(trim($dataFields[$fieldName])) > $rulevalue) {
+                            $this->setErrors($fieldName, $ruleName);
+                        }
+                    }
+                    if ($ruleName == 'email') {
+                        if (!filter_var($dataFields[$fieldName], FILTER_VALIDATE_EMAIL)) {
+                            $this->setErrors($fieldName, $ruleName);
+                        }
+                    }
+                    if ($ruleName == 'match') {
+                        if (trim($dataFields[$fieldName]) != trim($dataFields[$rulevalue])) {
+                            $this->setErrors($fieldName, $ruleName);
                         }
                     }
                 }
             }
         }
+        if (!empty($this->errors)) {
+            $checkValidate = false;
+        }
+        return $checkValidate;
     }
     // Get errors
-    public function error($fieldName)
+    public function error($fieldName='')
     {
-        return $fieldName;
+        if (!empty($this->errors)) {
+            if (empty($fieldName)) {
+                foreach($this->errors as $key=>$error) {
+                    $errorsArr[$key] = reset($error);
+                }
+                return $errorsArr;
+                //return $this->errors;
+            }
+            return reset($this->errors[$fieldName]);
+        }
+        return false;
+    }
+    // Set error
+    public function setErrors($fieldName, $ruleName) {
+        $this->errors[$fieldName][$ruleName] = $this->__message[$fieldName . '.' . $ruleName];
     }
 }
