@@ -23,6 +23,7 @@ if (!empty($configs_dir)) {
     }
 }
 require_once './core/Route.php';  // Load Route
+require_once './core/Session.php'; // Load Session
 require_once './app/App.php'; // Load app
 // Kiểm tra config và load Database
 if (!empty($config['database'])) {

@@ -7,43 +7,29 @@ class Home extends Controller
         $this->province = $this->model('HomeModel');
     }
     public function index()
-    {
-        /* $data = $this->province->getListProvince();
+    {   
+        /* $check = Session::data('username', [
+            'name' => 'Xuan Thai',
+            'email' => 'xuanthai0304@gmail.com',
+        ]);
+        var_dump($check);
+        Session::data('academy', 'unicode');
+        Session::delete('academy');
+        $sessionData = Session::data();
         echo '<pre>';
-        print_r($data);
+        print_r($sessionData);
         echo '</pre>'; */
 
-        /* $detail = $this->province->getDetailProvince('Hà Nội');
-        echo '<pre>';
-        print_r($detail);
-        echo '</pre>';
-
-        echo '<hr>';
-
-        //$data = $this->province->all();
-        $data = $this->province->find(1);
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>'; */
-        $data = [
-            'fullname' => 'Tran Van B',
-            'email' => 'tranvanb@gmail.com',
-            'password' => '123456789',
-            'about_content' => 'hihi',
-            'contact_facebook' => 'facebook',
-            'group_id ' => '1',
-        ];
-        $id = $this->db->table('users')->insert($data);
-        var_dump($id);
+        //Session::flash('msg', 'Thêm dữ liệu thành công');
+        $msg = Session::flash('msg');
+        echo $msg;
     }
     public function get_user()
     {
-        $request = new Request();
-        $data = $request->getFields();
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
-        $this->render('users/add');
+        $this->data['errors'] = Session::flash('errors');
+        $this->data['msg'] = Session::flash('msg');
+        $this->data['old'] = Session::flash('old');
+        $this->render('users/add', $this->data);
     }
     public function post_user()
     {
@@ -78,16 +64,14 @@ class Home extends Controller
 
             $validate = $request->validate();
             if (!$validate) {
-                $this->data['errors'] = $request->error();
-                $this->data['msg'] = 'Đã có lỗi xảy ra vui lòng thử lại sau.';
-                $this->data['old'] = $request->getFields();
+                Session::flash('errors', $request->error());
+                Session::flash('msg', 'Đã có lỗi xảy ra vui lòng thử lại sau.');
+                Session::flash('old', $request->getFields());
             }
-            $this->render('users/add', $this->data);
+            //$this->render('users/add', $this->data);
         }
-        else {
-            $reponse = new Response();
-            $reponse->redirect('home/get_user');
-        }
+        $reponse = new Response();
+        $reponse->redirect('home/get_user');
     }
     public function check_age($age) {
         if ($age >= 20) {
