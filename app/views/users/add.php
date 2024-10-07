@@ -13,6 +13,10 @@ echo !empty($msg) ? $msg : false;
         <span style="color: red;"><?php echo ((!empty($errors)) && array_key_exists('fullname', $errors)) ? $errors['fullname'] : false ?></span>
     </div>
     <div class="">
+        <input type="text" name="age" placeholder="Age..." value="<?php echo !empty($old['age']) ? $old['age'] : false ?>"><br>
+        <span style="color: red;"><?php echo ((!empty($errors)) && array_key_exists('age', $errors)) ? $errors['age'] : false ?></span>
+    </div>
+    <div class="">
         <input type="text" name="email" placeholder="Email..." value="<?php echo !empty($old['email']) ? $old['email'] : false ?>"><br>
         <span style="color: red;"><?php echo ((!empty($errors)) && array_key_exists('email', $errors)) ? $errors['email'] : false ?></span>
     </div>

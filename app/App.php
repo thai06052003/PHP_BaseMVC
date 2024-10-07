@@ -1,7 +1,7 @@
 <?php
 class App
 {
-    private $__controller, $__action, $__params, $__routes, $__db;
+    private $__controller, $__action, $__params, $__routes, $__db, $__request;
 
     static public $app;
 
@@ -22,8 +22,9 @@ class App
             $dbObject = new DB();
             $this->__db = $dbObject->db;
         }
+
         
-        $url = $this->handleUrl();
+        $this->handleUrl();
         
     }
     //
@@ -102,6 +103,10 @@ class App
         } else {
             $this->loadError();
         }
+    }
+    //
+    public function getCurrentController() {
+        return $this->__controller;
     }
     // Hiển thị lỗi 404
     public function loadError($name = '404', $data =[])

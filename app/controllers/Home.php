@@ -47,14 +47,16 @@ class Home extends Controller
     }
     public function post_user()
     {
+        $userId = 20;
         $request = new Request();
         if ($request->isPost()) {
             // Set rules
             $request->rules([
                 'fullname' => 'required|min:5|max:30',
-                'email' => 'required|email|min:6',
+                'email' => 'required|email|min:6|unique:users:email:id='.$userId,
                 'password' => 'required|min:3',
                 'confirm_password' => 'required|match:password',
+                'age' => 'required|callback_check_age',
             ]);
 
             // Set message
@@ -65,6 +67,9 @@ class Home extends Controller
                 'email.required' => 'Email không được để trống',
                 'email.email' => 'Định dạng email không hợp lệ',
                 'email.min' => 'Độ dài email phải lớn hơn 6 ký tự',
+                'email.unique' => 'Email đã tồn tại trong hệ thống',
+                'age.required' => 'Tuổi không được để trống',
+                'age.callback_check_age' => 'Tuổi không được nhỏ hơn 20',
                 'password.required' => 'Mật khẩu không được để trống',
                 'password.min' => 'Mật khẩu phải lớn hơn 3 ký tự',
                 'confirm_password.required' => 'Nhập lại mật khẩu không được để trống',
@@ -83,5 +88,11 @@ class Home extends Controller
             $reponse = new Response();
             $reponse->redirect('home/get_user');
         }
+    }
+    public function check_age($age) {
+        if ($age >= 20) {
+            return true;
+        }
+        return false;
     }
 }
