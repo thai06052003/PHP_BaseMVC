@@ -22,6 +22,18 @@ if (!empty($configs_dir)) {
         }
     }
 }
+// Load all Service
+if (!empty($config['app']['service'])) {
+    $allServices = $config['app']['service'];
+    if (!empty($allServices)) {
+        foreach ($allServices as $serviceName) {
+            if (file_exists('app/core/'.$serviceName.'.php')) {
+                require_once 'app/core/'.$serviceName.'.php';
+            }
+        }
+    }
+}
+
 require_once './core/Route.php';  // Load Route
 require_once './core/Session.php'; // Load Session
 require_once './app/App.php'; // Load app

@@ -23,7 +23,7 @@ class Home extends Controller
         //Session::flash('msg', 'Thêm dữ liệu thành công');
         /* $msg = Session::flash('msg');
         echo $msg; */
-        echo toSlug('Thời sự');
+        //echo toSlug('Thời sự');
     }
     public function get_user()
     {
