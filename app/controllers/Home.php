@@ -21,8 +21,9 @@ class Home extends Controller
         echo '</pre>'; */
 
         //Session::flash('msg', 'Thêm dữ liệu thành công');
-        $msg = Session::flash('msg');
-        echo $msg;
+        /* $msg = Session::flash('msg');
+        echo $msg; */
+        echo toSlug('Thời sự');
     }
     public function get_user()
     {
@@ -64,9 +65,7 @@ class Home extends Controller
 
             $validate = $request->validate();
             if (!$validate) {
-                Session::flash('errors', $request->error());
                 Session::flash('msg', 'Đã có lỗi xảy ra vui lòng thử lại sau.');
-                Session::flash('old', $request->getFields());
             }
             //$this->render('users/add', $this->data);
         }

@@ -156,6 +156,10 @@ class Request
         if (!empty($this->__errors)) {
             $checkValidate = false;
         }
+        $sessionKey = Session::isInvalid();
+        Session::flash($sessionKey.'_errors', $this->error());
+        Session::flash($sessionKey.'_old', $this->getFields());
+
         return $checkValidate;
     }
     // Get errors
