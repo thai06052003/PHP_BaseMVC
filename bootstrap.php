@@ -34,9 +34,12 @@ if (!empty($config['app']['service'])) {
     }
 }
 
+// MiddleWare
+require_once 'core/MiddleWare.php';
+
 require_once './core/Route.php';  // Load Route
 require_once './core/Session.php'; // Load Session
-require_once './app/App.php'; // Load app
+
 // Kiểm tra config và load Database
 if (!empty($config['database'])) {
     $db_config = $config['database'];
@@ -57,6 +60,8 @@ if (!empty($allHelpers)) {
         }
     }
 }
+
+require_once './app/App.php'; // Load app
 
 require_once './core/Model.php'; // Load Base Model
 require_once './core/Controller.php';   // Load base Controller
