@@ -33,7 +33,7 @@ if (!empty($config['app']['service'])) {
         }
     }
 }
-
+require_once 'core/Load.php';
 // MiddleWare
 require_once 'core/MiddleWare.php';
 

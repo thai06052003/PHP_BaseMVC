@@ -41,8 +41,8 @@ class App
         $url = $this->__routes->handleRoute($url);
 
         // Middle App
-        $this->handleRouteMiddleWare($this->__routes->getUri());
-        $this->handleGlobalMiddleWare();
+        $this->handleGlobalMiddleWare($this->__db);
+        $this->handleRouteMiddleWare($this->__routes->getUri(), $this->__db);
 
         $urlArr = array_filter(explode('/', $url));
         $urlArr = array_values($urlArr);
@@ -118,7 +118,7 @@ class App
         extract($data);
         require_once 'errors/' . $name . '.php';
     }
-    public function handleRouteMiddleWare($routeKey) {
+    public function handleRouteMiddleWare($routeKey, $db) {
         global $config;
         $routeKey = trim($routeKey);
         if (!empty($config['app']['routeMiddleWare'])) {
@@ -128,13 +128,16 @@ class App
                     require_once 'app/middleWares/'.$middleWareItem.'.php';
                     if (class_exists($middleWareItem)) {
                         $middleWareObject = new $middleWareItem();
+                        if (!empty($db)) {
+                            $middleWareObject->db = $db;
+                        }
                         $middleWareObject->handle();
                     }
                 }
             }
         }
     }
-    public function handleGlobalMiddleWare() {
+    public function handleGlobalMiddleWare($db) {
         global $config;
         if (!empty($config['app']['globalMiddleWare'])) {
             $globalMiddleWareArr = $config['app']['globalMiddleWare'];
@@ -143,6 +146,9 @@ class App
                     require_once 'app/middleWares/'.$middleWareItem.'.php';
                     if (class_exists($middleWareItem)) {
                         $middleWareObject = new $middleWareItem();
+                        if (!empty($db)) {
+                            $middleWareObject->db = $db;
+                        }
                         $middleWareObject->handle();
                     }
                 }
