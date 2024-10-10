@@ -13,6 +13,10 @@ class Controller {
     }
 
     public function render ($view, $data=[]) {
+        if (!empty(View::$dataShare)) {
+            $data = array_merge($data, View::$dataShare);
+        }
+        
         extract($data); // Đổi key của mảng thành biến
         if (file_exists(__DIR_ROOT.'/app/views/'.$view.'.php')) {
             require_once __DIR_ROOT.'/app/views/'.$view.'.php';

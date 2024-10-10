@@ -44,6 +44,9 @@ class App
         $this->handleGlobalMiddleWare($this->__db);
         $this->handleRouteMiddleWare($this->__routes->getUri(), $this->__db);
 
+        // App Service Provider
+        $this->handleAppServiceProvider($this->__db);
+
         $urlArr = array_filter(explode('/', $url));
         $urlArr = array_values($urlArr);
 
@@ -150,6 +153,24 @@ class App
                             $middleWareObject->db = $db;
                         }
                         $middleWareObject->handle();
+                    }
+                }
+            }
+        }
+    }
+    public function handleAppServiceProvider($db) {
+        global $config;
+        if (!empty($config['app']['boot'])) {
+            $serviceProviderArr = $config['app']['boot'];
+            foreach ($serviceProviderArr as $serviceName) {
+                if (file_exists('app/core/'.$serviceName.'.php')) {
+                    require_once 'app/core/'.$serviceName.'.php';
+                    if (class_exists($serviceName)) {
+                        $serviceObject = new $serviceName();
+                        if (!empty($db)) {
+                            $serviceObject->db = $db;
+                        }
+                        $serviceObject->boot();
                     }
                 }
             }

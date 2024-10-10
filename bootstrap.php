@@ -33,6 +33,13 @@ if (!empty($config['app']['service'])) {
         }
     }
 }
+
+// Load Service provider Class
+require_once 'core/serviceProvider.php';
+
+// Load View Class
+require_once 'core/View.php';
+
 require_once 'core/Load.php';
 // MiddleWare
 require_once 'core/MiddleWare.php';
