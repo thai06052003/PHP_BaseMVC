@@ -18,7 +18,7 @@ $configs_dir = scandir('configs');
 if (!empty($configs_dir)) {
     foreach ($configs_dir as $item) {
         if ($item != '.' && $item != '..' && file_exists('configs/' . $item)) {
-            require_once 'configs/' . $item;
+            require_once './configs/' . $item;
         }
     }
 }
@@ -28,21 +28,21 @@ if (!empty($config['app']['service'])) {
     if (!empty($allServices)) {
         foreach ($allServices as $serviceName) {
             if (file_exists('app/core/'.$serviceName.'.php')) {
-                require_once 'app/core/'.$serviceName.'.php';
+                require_once './app/core/'.$serviceName.'.php';
             }
         }
     }
 }
 
 // Load Service provider Class
-require_once 'core/serviceProvider.php';
+require_once './core/serviceProvider.php';
 
 // Load View Class
-require_once 'core/View.php';
+require_once './core/View.php';
 
-require_once 'core/Load.php';
+require_once './core/Load.php';
 // MiddleWare
-require_once 'core/MiddleWare.php';
+require_once './core/MiddleWare.php';
 
 require_once './core/Route.php';  // Load Route
 require_once './core/Session.php'; // Load Session
@@ -63,7 +63,7 @@ $allHelpers = scandir('app/helpers');
 if (!empty($allHelpers)) {
     foreach ($allHelpers as $item) {
         if ($item != '.' && $item != '..' && file_exists('app/helpers/' . $item)) {
-            require_once 'app/helpers/' . $item;
+            require_once './app/helpers/' . $item;
         }
     }
 }
@@ -71,6 +71,7 @@ if (!empty($allHelpers)) {
 require_once './app/App.php'; // Load app
 
 require_once './core/Model.php'; // Load Base Model
+require_once './core/Template.php'; // Load Template Class
 require_once './core/Controller.php';   // Load base Controller
 require_once './core/Request.php';   // Load Request
 require_once './core/Response.php';   // Load Response
