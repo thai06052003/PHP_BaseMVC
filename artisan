@@ -19,26 +19,6 @@ if (!empty($_SERVER['argv'][1])) {
             }
         }
     }
-    // Create model
-    if ($_SERVER['argv'][1] == 'make:model') {
-        if (!empty($_SERVER['argv'][2])) {
-            // Get model name
-            $modelName = $_SERVER['argv'][2];
-            
-            // Check model exist
-            if (!file_exists('app/models/'.$modelName.'.php')) {
-                $data = file_get_contents('core/console/model.tpl');
-                $data = str_replace('{modelName}', $modelName, $data);
-
-                file_put_contents('app/models/'.$modelName.'.php', $data);
-                echo "\033[32mTao model $modelName.php thanh cong \033[0m";
-            }
-            else {
-                echo "\033[31m Model $modelName da ton tai\033[0m";
-            }
-        }
-    }
-
     // Delete controller
     if ($_SERVER['argv'][1] == 'delete:controller') {
         if (!empty($_SERVER['argv'][2])) {
@@ -55,6 +35,27 @@ if (!empty($_SERVER['argv'][1])) {
             }
         }
     }
+    // Create model
+    if ($_SERVER['argv'][1] == 'make:model') {
+        if (!empty($_SERVER['argv'][2])) {
+            // Get model name
+            $modelName = $_SERVER['argv'][2];
+            
+            // Check model exist
+            if (!file_exists('app/models/'.$modelName.'.php')) {
+                $data = file_get_contents('core/console/model.tpl');
+                $data = str_replace('{modelName}', $modelName, $data);
+
+                file_put_contents('app/models/'.$modelName.'.php', $data);
+                echo "\033[32mTao model $modelName.php thanh cong \033[0m";
+            }
+            else {
+                echo "\033[31mModel $modelName da ton tai\033[0m";
+            }
+        }
+    }
+
+    
     // Delete model
     if ($_SERVER['argv'][1] == 'delete:model') {
         if (!empty($_SERVER['argv'][2])) {
@@ -67,7 +68,44 @@ if (!empty($_SERVER['argv'][1])) {
                 echo "\033[32mXoa model $modelName.php thanh cong  \033[0m\n";
             }
             else {
-                echo "\e[93m Model $modelName.php khong ton tai \e[0m\n";
+                echo "\e[93mModel $modelName.php khong ton tai \e[0m\n";
+            }
+        }
+    }
+    // Create middleWare
+    if ($_SERVER['argv'][1] == 'make:middleWare') {
+        if (!empty($_SERVER['argv'][2])) {
+            // Get middleWare name
+            $middleWareName = $_SERVER['argv'][2];
+            
+            // Check middleWare exist
+            if (!file_exists('app/middleWares/'.$middleWareName.'.php')) {
+                $data = file_get_contents('core/console/middleWare.tpl');
+                $data = str_replace('{middleWareName}', $middleWareName, $data);
+
+                file_put_contents('app/middleWares/'.$middleWareName.'.php', $data);
+                echo "\033[32mTao middleWare $middleWareName.php thanh cong \033[0m";
+            }
+            else {
+                echo "\033[31mMiddleWare $middleWareName da ton tai\033[0m";
+            }
+        }
+    }
+
+    
+    // Delete middleWare
+    if ($_SERVER['argv'][1] == 'delete:middleWare') {
+        if (!empty($_SERVER['argv'][2])) {
+            // Get middleWare name
+            $middleWareName = $_SERVER['argv'][2];
+            
+            // Check middleWare exist
+            if (file_exists('app/middleWares/'.$middleWareName.'.php')) {
+                unlink('app/middleWares/'.$middleWareName.'.php');
+                echo "\033[32mXoa middleWare $middleWareName.php thanh cong  \033[0m\n";
+            }
+            else {
+                echo "\e[93mMiddleWare $middleWareName.php khong ton tai \e[0m\n";
             }
         }
     }

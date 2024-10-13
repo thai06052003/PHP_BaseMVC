@@ -1,8 +1,5 @@
 <?php
-$routes['default_controller'] = 'home';
+$routes['default_controller'] = 'homeController';
 
 // Đường dẫn ảo => đường dẫn thật
-$routes['san-pham'] = 'product/list_product';
-$routes['trang-chu'] = 'home';
-$routes['tin-tuc/.+-(\d+).html'] = 'news/category/$1';
-$routes['chi-tiet-san-pham/.+-(\d+).html'] = 'product/detail/$1';
+

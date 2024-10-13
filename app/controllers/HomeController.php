@@ -1,6 +1,6 @@
 <?php
-// Post Controller
-class Post extends Controller {
+// HomeController Controller
+class HomeController extends Controller {
     public $data = [], $model = [];
 
     public function __construct(){
@@ -9,5 +9,6 @@ class Post extends Controller {
     
     public function index(){
         // Index
+        $this->render('welcome');
     }
 }
